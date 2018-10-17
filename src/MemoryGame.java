@@ -4,13 +4,11 @@
 // Due:         October 15, 2018
 // Course:      CS-2450
 // Description: 
-//      Match Pairs is a memory game where you need to match pairs of tiles. 
-//  Playing is very simple - you turn over one tile and then try to find a 
-//  matching tile. Initially, all the tiles show the same game image. When you 
-//  click on a tile of a turn, the game image will turn into the actual image of 
-//  the tile. If you have exposed a matching tile in a previous turn, the pair 
-//  remains revealed with their actual image. If the tiles are not matched, 
-//  they both will be turned back to the game image after a few seconds.
+//      Match Pairs is a memory game where you need to match pairs of tiles. Playing is very simple - you turn over 
+//  one tile and then try to find a matching tile. Initially, all the tiles show the same game image. 
+//  When you click on a tile of a turn, the game image will turn into the actual image of the tile. 
+//  If you have exposed a matching tile in a previous turn, the pair remains revealed with their actual image. 
+//  If the tiles are not matched, they both will be turned back to the game image after a few seconds.
 
 import java.awt.*;
 import java.awt.event.*;
@@ -34,22 +32,14 @@ class MemoryGame {
     JFrame mainFrame = new JFrame("Memory Game");
     
     MemoryGame() {
-        
-        mainFrame.getContentPane().setLayout(new BorderLayout());
-        
-        // Give the frame an initial size. 
         mainFrame.setSize(800, 650);
 
-        // Set application to center when open
         mainFrame.setLocationRelativeTo(null);
 
-        // Terminate the program when the user closes the application. 
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Set icon
         mainFrame.setIconImage(new ImageIcon("MemoryGame.png").getImage());
         
-        // set GridLayout 
         p1.setLayout(new GridLayout(3, 4));
         
         // Create main timer
@@ -78,6 +68,38 @@ class MemoryGame {
         // Add grid layout to frame
         mainFrame.add(p1, BorderLayout.CENTER);
         
+        JMenuBar mainMenu = new JMenuBar();
+        
+        JMenu firstMenu = new JMenu("File");
+        
+        JMenuItem exitMenu = new JMenuItem("Exit");
+        
+        exitMenu.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {
+                System.exit(0);
+            }
+        });
+        
+        firstMenu.add(exitMenu);
+        
+        JMenu secondMenu = new JMenu("Help");
+        
+        JMenuItem aboutMenu = new JMenuItem("About");
+        
+        aboutMenu.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {
+                timerDisplay.setText("(c) Nathaniel Dao");
+            }
+        });
+        
+        secondMenu.add(aboutMenu);
+        
+        mainMenu.add(firstMenu);
+        mainMenu.add(secondMenu);
+        
+        mainFrame.setJMenuBar(mainMenu);
         mainFrame.setVisible(true);
     }
     
@@ -156,6 +178,13 @@ class MemoryGame {
             {
                 // Save first JToggleButton
                 firstChoice = (JToggleButton) e.getSource();
+                for(int i = 0; i < bArray.length; i++)
+                {
+                    if(firstChoice == bArray[i])
+                    {
+                        bArray[i].setEnabled(false);
+                    }
+                }
             }
 
             if(numClick == 2)
